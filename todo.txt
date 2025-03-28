@@ -1,0 +1,14 @@
+with explanation
+
+- Imagine you're playing with your toys, and when you're done, you have to clean them up and put them back in the box. You don't want to forget to clean up because it makes your room messy. In Python, we use with to help us automatically clean up things when we're done using them, so we don't forget.
+
+- For example, if you're using something like a book (maybe you're reading it), you don't want to just leave it open on the floor. You want to close it when you're done. If you use with, it will automatically close the book for you when you're done reading, without you having to think about it.
+
+with open('my_file.txt', 'r') as file:
+    content = file.read()
+    print(content)
+
+In this case:
+- open('my_file.txt', 'r') is like opening a book.
+
+- with makes sure that after you're done reading the file, it gets closed properly, like putting the book  back on the shelf.

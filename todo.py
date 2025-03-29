@@ -7,7 +7,7 @@ TODO_FILE = "todo.json"  # this variable hold our file
 
 # function
 def load_task():  # load task from todo.json
-    if os.path.exists(TODO_FILE):  # exists in os module
+    if not os.path.exists(TODO_FILE):  # exists in os module
         return []  # tell system about the above condition
     with open(TODO_FILE, "r") as file:
         # r is used for read mode and extract data in read mode
@@ -42,18 +42,18 @@ def add(task):
     )  # this task is coming from @click.argument ("task")
 
 
-@click.command()
-def list():
+@click.command(name="list")
+def tasklist():
     """List of task"""
     tasks = load_task()  # open file
     if not tasks:
-        click.echo("No task available")
-        return
+        click.echo("No task found")
+        return  # stop execution
     for index, task in enumerate(
         tasks, 1
     ):  # task in property here and tasks is variable , starting from 1
         status = "✅" if task["done"] else "❌"
-        click.echo(f"{index}, {task['task']} , [{status}] ")
+        click.echo(f"{index}. {task['task']} , [{status}] ")
 
 
 @click.command()
@@ -78,14 +78,13 @@ def deleted(task_number):
         removed_task = tasks.pop(task_number - 1)
         # del tasks[task_number - 1]
         save_task(tasks)
-        click.echo(f"Task {task_number} deleted")
-        click.echo(f"Removed task successfully {task_number["task"]}")
+        click.echo(f"Removed task successfully {removed_task['task']}")
     else:
         click.echo(f"Invalid task number : {task_number}")
-        
+
 
 cli.add_command(add)
-cli.add_command(list)
+cli.add_command(tasklist)
 cli.add_command(completed)
 cli.add_command(deleted)
 

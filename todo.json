@@ -1,6 +1,14 @@
 [
     {
-        "task": "todo list done",
+        "task": "grocery",
+        "done": false
+    },
+    {
+        "task": "shopping",
+        "done": true
+    },
+    {
+        "task": "python learning",
         "done": false
     }
 ]

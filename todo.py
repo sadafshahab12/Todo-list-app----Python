@@ -23,7 +23,7 @@ def save_task(tasks):  # user defined task
 
 
 @click.group()
-def cli(): #all work done by cli
+def cli():  # all work done by cli
     """Simple todo list manager"""
     pass
 
@@ -34,7 +34,7 @@ def add(task):
     """Add new task into list"""
     tasks = load_task()  # open file
     tasks.append(
-        {"task": task, "done": False} # this task is from argument
+        {"task": task, "done": False}  # this task is from argument
     )  # store a dictionary in a file this task variable
     save_task(tasks)
     click.echo(
@@ -49,14 +49,45 @@ def list():
     if not tasks:
         click.echo("No task available")
         return
-    for index , task in enumerate(tasks,1):  #task in property here and tasks is variable , starting from 1
+    for index, task in enumerate(
+        tasks, 1
+    ):  # task in property here and tasks is variable , starting from 1
         status = "✅" if task["done"] else "❌"
         click.echo(f"{index}, {task['task']} , [{status}] ")
-    
 
+
+@click.command()
+@click.argument("task_number", type=int)
+def completed(task_number):
+    """Mark Task completed"""
+    tasks = load_task()
+    if 0 < task_number <= len(tasks):
+        tasks[task_number - 1]["done"] = True
+        save_task(tasks)
+        click.echo(f"Task {task_number} marked as completed")
+    else:
+        click.echo(f"Invalid task number : {task_number}")
+
+
+@click.command()
+@click.argument("task_number", type=int)
+def deleted(task_number):
+    """Delete task"""
+    tasks = load_task()
+    if 0 < task_number <= len(tasks):
+        removed_task = tasks.pop(task_number - 1)
+        # del tasks[task_number - 1]
+        save_task(tasks)
+        click.echo(f"Task {task_number} deleted")
+        click.echo(f"Removed task successfully {task_number["task"]}")
+    else:
+        click.echo(f"Invalid task number : {task_number}")
+        
 
 cli.add_command(add)
 cli.add_command(list)
+cli.add_command(completed)
+cli.add_command(deleted)
 
 if __name__ == "__main__":
     cli()  # if this file is run directly then this will run

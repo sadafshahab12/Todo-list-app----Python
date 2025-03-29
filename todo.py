@@ -43,14 +43,20 @@ def add(task):
 
 
 @click.command()
-def list_tasks():
+def list():
     """List of task"""
     tasks = load_task()  # open file
-    
+    if not tasks:
+        click.echo("No task available")
+        return
+    for index , task in enumerate(tasks,1):  #task in property here and tasks is variable , starting from 1
+        status = "✅" if task["done"] else "❌"
+        click.echo(f"{index}, {task['task']} , [{status}] ")
     
 
 
 cli.add_command(add)
+cli.add_command(list)
 
 if __name__ == "__main__":
     cli()  # if this file is run directly then this will run

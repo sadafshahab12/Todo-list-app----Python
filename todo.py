@@ -88,5 +88,7 @@ cli.add_command(tasklist)
 cli.add_command(completed)
 cli.add_command(deleted)
 
+# command to run uv run python filename command
+
 if __name__ == "__main__":
     cli()  # if this file is run directly then this will run
